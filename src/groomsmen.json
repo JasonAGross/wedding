@@ -1,0 +1,14 @@
+{
+	"groomsmen": {
+		"ryan": {
+			"name": "Ryan Strouse",
+			"alias": "t4nd4r",
+			"status": true
+		},
+		"dan": {
+			"name": "Dan Gaines",
+			"alias": "D",
+			"status": false
+		}
+	}
+}

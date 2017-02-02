@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <title>Alicia and Jason 2017</title>
+
+    <link rel="stylesheet" href="css/groomsmen.css">
+    <link href="https://file.myfontastic.com/Ts8vfukvBBzvDPtsrXDneb/icons.css" rel="stylesheet">
+
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://use.typekit.net/yeu6hsr.js"></script>
+    <script>try{Typekit.load({ async: true });}catch(e){}</script>
+  </head>
+  <body>
+    <div id="groomsmen-container">
+      <div class="profile" :class="{ confirmed: groomsmen.status }" v-for="groomsmen in groomsmen">
+        <table>
+          <tr>
+            <td class="label">Name:</td>
+            <td>{{ groomsmen.name }}</td>
+          </tr>
+          <tr>
+            <td class="label">Alias:</td>
+            <td>{{ groomsmen.alias }}</td>
+          </tr>
+        </table>
+        <button @click="confirmSpot">Confirm</button>
+      </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/3.6.8/firebase.js"></script>
+    <script src="https://unpkg.com/vuefire/dist/vuefire.js"></script>    
+    <script src="src/groomsmen.js"></script>
+  </body>
+</html>
