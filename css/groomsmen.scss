@@ -7,6 +7,7 @@ $beige: #fcf5ec;
 $dark-gray: #1d1d1e;
 
 html, body {
+	background: $beige;
 	color: $dark-gray;
 	font-family: "proxima-nova", arial, sans-serif;
 }
@@ -22,6 +23,59 @@ a:hover {
 
 .hidden {
 	display: none;
+}
+
+button {
+	background: $beige;
+	font-size: 1.25em;
+	font-weight: bold;
+	display: inline-block;
+	margin: .5em;
+	padding: 0 1em;
+	line-height: 34px;
+	border-radius: 20px;
+	transition: all 0.35s ease-in-out;
+
+	span {
+		float: left;
+		margin-top: 2px;
+		margin-right: .5em;
+	}
+
+	&.affirm {
+		color: $navy;
+		border: 2px solid $navy;
+
+		&:hover {
+			background: $navy;
+			color: $beige;
+		}
+	}
+
+	&.deny {
+		opacity: .5;
+		color: $dark-gray;
+		border: 2px solid $dark-gray;
+
+		&:hover {
+			opacity: 1;
+		}
+	}
+}
+
+#landing-page {
+	text-align: center;
+
+	h1 {
+		margin: 3em auto;
+		padding: 0 1em;
+		color: $navy;
+	}
+
+	h2 {
+		font-weight: 100;
+		padding: 0 1em;
+	}
 }
 
 @media only screen and (min-width: 450px) {

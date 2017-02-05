@@ -15,19 +15,33 @@
     <script>try{Typekit.load({ async: true });}catch(e){}</script>
   </head>
   <body>
-    <div id="groomsmen-container">
-      <div class="profile" :class="{ confirmed: groomsmen.status }" v-for="groomsmen in groomsmen">
-        <table>
-          <tr>
-            <td class="label">Name:</td>
-            <td>{{ groomsmen.name }}</td>
-          </tr>
-          <tr>
-            <td class="label">Alias:</td>
-            <td>{{ groomsmen.alias }}</td>
-          </tr>
-        </table>
-        <button @click="confirmSpot">Confirm</button>
+
+    <div id="app">
+      <div id="landing-page" v-if="!groomsman.viewed">
+        <h1>{{ groomsman.name }}, you've been identified.</h1>
+        <h2>You are uniquely qualified to take part in union of Alicia and Jason. Will you accept the responsibility of being my groomsman?</h2>
+        <div class="button-container">
+          <button class="affirm" @click="confirmSpot">I accept</button>
+          <button class="deny" @click="declineSpot">I decline</button>
+        </div>
+      </div>
+      <div id="groomsmen-container" v-if="groomsman.viewed && groomsman.status">
+        <div class="profile" :class="{ confirmed: groomsmen.status }" v-for="groomsmen in groomsmen">
+          <table>
+            <tr>
+              <td class="label">Name:</td>
+              <td>{{ groomsmen.name }}</td>
+            </tr>
+            <tr>
+              <td class="label">Alias:</td>
+              <td>{{ groomsmen.alias }}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div id="declined" v-if="groomsman.viewed && !groomsman.status">
+        <p>{{ groomsman.name.substr(0,groomsman.name.indexOf(' ')) }}, I'm sorry that you won't be able to be a groomsman in my wedding. You should give me a call so we can chat about it.</p>
+        <button class="affirm" @click="confirmSpot">I didn't mean to decline, I just wanted to know what happened if I hit the button</button>
       </div>
     </div>
 
