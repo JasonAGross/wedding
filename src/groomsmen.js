@@ -30,6 +30,10 @@ var app = new Vue({
 				status: false,
 				viewed: true
 			})
+		},
+		getImg: function (val) {
+			var src = 'img/' + val + '.jpg';
+			return src;
 		}
   	}
 })

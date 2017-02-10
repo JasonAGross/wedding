@@ -3,8 +3,11 @@
 @import 'normalize';
 
 $navy: #20253f;
+$green: #1d9038;
 $beige: #fcf5ec;
+$gray: #989898;
 $dark-gray: #1d1d1e;
+$light-gray: #ddd;
 
 html, body {
 	background: $beige;
@@ -75,6 +78,88 @@ button {
 	h2 {
 		font-weight: 100;
 		padding: 0 1em;
+	}
+}
+
+#groomsmen-container {
+	padding: 1em;
+}
+
+.profile {
+	position: relative;
+	background: white;
+	padding: 1em;
+	margin-bottom: 1.5em;
+	min-height: 175px;
+	border: 1px solid $light-gray;
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+
+	img {
+		position: absolute;
+		top: -5px;
+		left: -10px;
+		max-width: 125px;
+		border: 2px solid $dark-gray;
+		border-radius: 5px;
+		box-shadow: 0 2px 3px rgba(0, 0, 0, 0.25);
+	}
+
+	h1 {
+		color: $navy;
+		margin-bottom: .25em;
+		margin-left: 125px;
+	}
+
+	h3 {
+		color: $gray;
+		font-weight: 100;
+		margin-top: .25em;
+		margin-left: 125px;
+	}
+
+	ul {
+		margin-top: 2em;
+		margin-bottom: 3em;
+		list-style: none;
+		padding-left: 1em;
+
+		li {
+			display: inline-block;
+			margin-right: .5em;
+
+			span {
+				color: $gray;
+			}
+		}
+	}
+
+	.status {
+		position: absolute;
+		right: -5px;
+		bottom: -10px;
+		padding: .5em; 
+		background: $light-gray;
+		color: $navy;
+		border: 2px solid $dark-gray;
+		border-radius: 5px;
+		box-shadow: 0 2px 3px rgba(0, 0, 0, 0.25);
+
+		h2 {
+			margin: 0;
+		}
+
+		span {
+			margin-right: .5em;
+		}
+	}
+
+	&.confirmed {
+
+		.status {
+			color: $green;
+			border-color: $green;
+			background: lighten($green, 60);
+		}
 	}
 }
 
