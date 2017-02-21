@@ -30,6 +30,7 @@
         <button class="affirm" @click="confirmSpot">I didn't mean to decline, I just wanted to know what happened if I hit the button</button>
       </div>
       <div id="groomsmen-container" v-if="groomsman.viewed && groomsman.status">
+      	<h1>Groomsmen Roster</h1>
         <div class="profile" :class="{ confirmed: groomsmen.status }" v-for="groomsmen in groomsmen">
           <img :src="getImg(groomsmen['.key'])">
           <h1>{{ groomsmen.name }}</h1>
