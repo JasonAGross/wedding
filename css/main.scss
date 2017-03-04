@@ -11,6 +11,12 @@ html, body {
 	font-family: "proxima-nova", arial, sans-serif;
 }
 
+body {
+	background: url('../img/mobileHero1.jpg');
+	background-repeat: no-repeat;
+    background-size: contain;
+}
+
 h1, h2, h3 {
 	font-family: "spumante", sans-serif;
 	font-weight: 100;
@@ -30,7 +36,7 @@ a:hover {
 }
 
 #pageHeader {
-	background: $beige;
+	background: rgba(255, 255, 255, 0.75);
 	padding-top: 1em;
 
 	img {
@@ -40,8 +46,6 @@ a:hover {
 	}
 
 	nav {
-		background: white;
-		border-top: 1px solid #eee;
 		border-bottom: 2px solid $navy;
 		box-shadow: 0 2px 5px 0px rgba(0,0,0,0.1);
 	}
@@ -91,7 +95,13 @@ a:hover {
 }
 
 section {
-	margin: 0 1em;
+	margin: 1.5em;
+	padding: 1em;
+	background: rgba(255, 255, 255, 0.75);
+
+	h1:first-child {
+		margin-top: 0;
+	}
 }
 
 @media only screen and (min-width: 450px) {
