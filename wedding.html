@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <title>Alicia and Jason 2017 - Our Wedding</title>
+
+    <link rel="stylesheet" href="css/main.css">
+    <link href="https://file.myfontastic.com/Ts8vfukvBBzvDPtsrXDneb/icons.css" rel="stylesheet">
+
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://use.typekit.net/yeu6hsr.js"></script>
+    <script>try{Typekit.load({ async: true });}catch(e){}</script>
+  </head>
+  <body>
+    <header id="pageHeader" class="clearfix">
+		<img src="img/logo.png">
+		<nav>
+			<ul>
+				<navigation-item v-for="item in links" v-bind:links="item"></navigation-item>
+			</ul>
+		</nav>
+    </header>
+    <div class="hero wedding">
+        <div class="small">
+            <img src="img/weddinghero-small.jpg">
+        </div>
+        <div class="large">
+            <img src="img/weddinghero-large.jpg">
+        </div>
+    </div>
+    <section>
+    	<h1>Laurel Hall</h1>
+    	<p>Built nearly a century ago, Laurel Hall has watched Indianapolis grow around it. This classic building and its pristinely preserved interior allows for a step back in time as we celebrate the timeless tradition of our eternal union.</p>
+        <p>We are so excited to be able to host our family and friends in this beautiful venue. While not far from the heart of Indianapolis, Laurel Hall and its grounds have a way of transporting you to another time and place.</p>
+        <p>Both our ceremony and reception will take place at the venue, as we look to take advantage of all the building has to offer. If you are interested in driving directions or location, you can <a href="https://www.google.com/maps/place/Laurel+Hall/@39.851406,-86.0830286,15z/data=!4m5!3m4!1s0x0:0x115c95636aba8e3!8m2!3d39.851406!4d-86.0830286" target="_blank">pull the venue up on a map</a>. As the event draws closer we will be updating this page with times and details about our big day.</p>
+    </section>
+    <script src="src/main.js"></script>
+  </body>
+</html>

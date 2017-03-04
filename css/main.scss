@@ -2,8 +2,8 @@
 
 @import 'normalize';
 
-$navy: #20253f;
-$beige: #fcf5ec;
+$navy: #333d70;
+$beige: #f1eae8;
 $dark-gray: #1d1d1e;
 
 html, body {
@@ -18,7 +18,6 @@ h1, h2, h3 {
 
 a, a:active, a:visited {
 	color: $navy;
-	text-decoration: none;
 }
 
 a:hover {
@@ -65,7 +64,9 @@ a:hover {
 		li a {
 			position: relative;
 			display: block;
+			color: $navy;
 			text-align: center;
+			text-decoration: none;
 			padding: 1em .5em;
 
 			&:hover:after, &.active:after {
@@ -84,19 +85,75 @@ a:hover {
 }
 
 .hero {
-	max-width: 100%;
 	margin-top: 2em;
 	border-top: 2px solid $beige;
 	border-bottom: 2px solid $beige;
+
+	img {
+		display: block;
+		max-width: 100%;
+	}
+
+	.large {
+		display: none;
+	}
 }
 
 section {
 	margin: 0 1em;
 }
 
-@media only screen and (min-width: 450px) {
+@media only screen and (min-width: 649px) {
 
+	#pageHeader {
+		padding: 1em;
 
+		img {
+			float: left;
+		}
+		
+		nav {
+			float: left;
+			background: none;
+			margin-top: 25px;
+			margin-left: 15px;
+			font-size: 1.25em;
+    		border: none;
+    		box-shadow: none;
+
+    		li a.active {
+    			text-decoration: underline
+    		}
+
+    		li a:hover:after, li a.active:after {
+    			display: none;
+    		}
+		}
+	}
+
+	.hero {
+		.small {
+			display: none;
+		}
+
+		.large {
+			display: block;
+		}
+	}
+
+}
+
+@media only screen and (min-width: 799px) {
+	#pageHeader {
+		img {
+			max-width: 150px;
+		}
+
+		nav {
+			font-size: 1.5em;
+			margin-top: 35px;
+		}
+	}
 }
 
 * {
