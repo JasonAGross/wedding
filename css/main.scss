@@ -5,6 +5,11 @@
 $navy: #333d70;
 $beige: #f1eae8;
 $dark-gray: #1d1d1e;
+$mid-gray: #8e8e8e;
+
+* {
+	box-sizing: border-box;
+}
 
 html, body {
 	color: $dark-gray;
@@ -26,6 +31,40 @@ a:hover {
 
 .hidden {
 	display: none;
+}
+
+label {
+	display: block;
+}
+
+input[type="text"], select {
+	padding: .625em;
+	border: 1px solid $mid-gray;
+	border-radius: 4px;
+}
+
+.button {
+	padding: .45em 1.25em;
+    margin: .25em;
+    border-radius: 25px;
+    background: none;
+    font-size: 1.15em;
+    transition: background 0.25s ease-in-out;
+
+	&.affirmative {
+		border: 2px solid #0b8860;
+		color: #0b8860;
+	}
+
+	&.neutral {
+		border: 2px solid $mid-gray;
+		color: $mid-gray;
+	}
+
+	&:hover {
+		cursor: pointer;
+		background: rgba(150, 150, 150, .15);
+	}
 }
 
 #pageHeader {
@@ -113,6 +152,27 @@ section {
 
 	aside {
 		height: 250px;
+	}
+}
+
+
+
+.rsvp {
+	font-size: 125%;
+
+	.formField {
+		display: inline-block;
+		margin-top: 1.5em;
+	}
+
+	.results ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+
+		.button {
+			font-size: 90%;
+		}
 	}
 }
 

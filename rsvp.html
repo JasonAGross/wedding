@@ -29,47 +29,122 @@
         </div>
     </header>
     <div class="wrapper">
-        <div id="app">
-            <div>
-                <label>Name / Address</label>
-                <input type="text" name="search" id="search" v-model="searchValue">
-                <button @click="searchRSVP">Search</button>
-                <div class="results">
-                    <p>Results:</p>
-                    <ul>
-                        <li v-for="result in filteredResults">
-                            {{ result.item.Name }} / {{ result.item.Spouse }} -- {{ result.score }}
-                        </li>
-                    </ul>
+        <div id="app" class="rsvp">
+            <h2>Whittaker/Gross Wedding RSVP</h2>
+            <div class="searchPage" v-if="step === 0">
+            	<div v-if="!searchConducted">
+	            	<p>Thank you for visiting the website to RSVP for our wedding. Please enter either your name or address.</p>
+                    <div class="formField">
+	                   <label>Name / Address</label>
+	                   <input type="text" name="search" id="search" v-model="searchValue" autofocus>
+                    </div>
+	                <button @click="searchRSVP" class="button affirmative" type="button" role="button">Search</button>
                 </div>
+                <div v-else>
+	                <div v-if="Object.keys(activeGuest).length > 0">
+	                	<h4>Hello {{ activeGuest.Name.split(' ')[0] }},</h4>
+	                	<p>Are you planning on attending our wedding?</p>
+	                	<button class="button affirmative" @click="confirmPrimary">Yes, I will attend</button>
+                        <button class="button neutral" @click="denyPrimary">No, I can't make it</button>
+	                </div>
+	                <div v-else-if="filteredResults.length > 1" class="results">
+	                    <h4>Multiple Matches</h4>
+	                    <p>We found more than one potential result, which one are you?</p>
+	                    <ul>
+	                        <li v-for="(result, index) in filteredResults">
+	                            <button class="button affirmative" @click="selectResult(index)">This is me</button>{{ result.Name }} <span v-if="result.Spouse">and {{ result.Spouse }}</span>
+	                        </li>
+	                    </ul>
+	                </div>
+	                <div v-else>
+	                	<h4>No Match</h4>
+	                	<p>Sorry, we didn't find any suitable matches for <strong>{{ searchValue }}</strong>, please try again. Remember, you can use either your name or address. If you continue to have trouble please give Jason a call at 812-499-9475 or Alicia at 574-780-0583.</p>
+	                	<label>Name / Address</label>
+		                <input type="text" name="search" id="search" v-model="searchValue">
+		                <button class="button affirmative" @click="searchRSVP">Search</button>
+		            </div>
+		        </div>
             </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Spouse / SO</th>
-                        <th>Address</th>
-                        <th>Guests Allowed</th>
-                        <th>Invite Sent</th>
-                        <th>RSVP Status</th>
-                        <th>Attending Count</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="guest in guests">
-                        <td>{{ guest.Name }}</td>
-                        <td>{{ guest.Spouse }}</td>
-                        <td>
-                            {{ guest.Address }}<br />
-                            {{ guest.City }}, {{ guest.State }} {{ guest.Zip }}
-                        </td>
-                        <td>{{ guest.Guests }}</td>
-                        <td>{{ guest.Invite }}</td>
-                        <td>{{ guest.RSVP }}</td>
-                        <td>{{ guest.RSVPCount }}</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="guestPage" v-if="step === 1">
+                <div v-if="primaryAttending">
+                    <h4>That's great {{ activeGuest.Name.split(' ')[0] }}!</h4>
+                    <p>We can't wait to see you at our wedding. 
+                        <span v-if="activeGuest.Spouse">Will {{ activeGuest.Spouse.split(' ')[0] }} be joining you?</span>
+                        <span v-else-if="activeGuest.Guests > 0">Are you planning on bringing a guest with you?</span>
+                    </p>
+                    <div v-if="activeGuest.Spouse">
+                        <button class="button affirmative" @click="confirmSO">Yes, {{ activeGuest.Spouse.split(' ')[0] }} is coming too</button>
+                        <button class="button neutral" @click="denySO">No, {{ activeGuest.Spouse.split(' ')[0] }} can't come</button>
+                    </div>
+                    <div v-else-if="activeGuest.Guests > 0">
+                        <button class="button affirmative" @click="confirmGuest">Yes, I plan to bring a guest</button>
+                        <button class="button neutral" @click="denyGuest">No, I am only RSVPing for myself</button>
+                    </div>
+                    <div v-else>
+                        <p>Your RSVP is all set. If your status changes or you need anything else please give Jason a call at 812-499-9475 or Alicia at 574-780-0583.</p>
+                        <p>As one last step we are giving our guests the option to provide us with a cell phone number so that we can get in touch with you prior to our event. We will be sending out a text message to anyone who provides their number to provide them with the gate code required to get into the venue on the big day. Additionally, we may reach out to notify our guests of any considerations that need to be made on behalf of the weather report.</p>
+                        <label>Cell Phone (optional)</label>
+                        <input type="text" name="phone" id="phone">
+                        <button class="button affirmative" @click="submitNumber">Submit</button>
+                        <p>For information about accomodation in Indianapolis, couple registration, or event times and locations please visit the <a href="info.html">guest information page</a>.</p>
+                    </div>
+                </div>
+                <div v-else>
+                    <h4>We're sorry to hear that {{ activeGuest.Name.split(' ')[0] }},</h4>
+                    <div v-if="activeGuest.Spouse">
+                        <p>Will {{ activeGuest.Spouse.split(' ')[0] }} be attending without you?</p>
+                        <button class="button affirmative" @click="confirmSO">Yes, {{ activeGuest.Spouse.split(' ')[0] }} is still coming</button>
+                        <button class="button neutral" @click="denySO">No, we are both missing the event</button>
+                    </div>
+                    <p v-else>
+                        Thank you for completing your RSVP process. If your status changes or you need anything else please give Jason a call at 812-499-9475 or Alicia at 574-780-0583.
+                    </p>
+                </div> 
+            </div>
+            <div class="infoPage" v-if="step === 2">
+                <div v-if="primaryAttending || SOAttending">
+                    <h4>We'll see you in October!</h4>
+                    <p>Your RSVP is all set. If your status changes or you need anything else please give Jason a call at 812-499-9475 or Alicia at 574-780-0583.</p>
+                    <p>As one last step we are giving our guests the option to provide us with a cell phone number so that we can get in touch with you prior to our event. We will be sending out a text message to anyone who provides their number to provide them with the gate code required to get into the venue on the big day. Additionally, we may reach out to notify our guests of any considerations that need to be made on behalf of the weather report.</p>
+                    <label>Cell Phone (optional)</label>
+                    <input type="text" name="phone" id="phone">
+                    <button class="button affirmative" @click="submitNumber">Submit</button>
+                    <p>For information about accomodation in Indianapolis, couple registration, or event times and locations please visit the <a href="info.html">guest information page</a>.</p>
+                </div>
+                <div v-else>
+                    <h4>Thank you</h4>
+                    <p>Thank you for completing your RSVP process. We are sorry you will not be able to attend our wedding. If your status changes or you need anything else please give Jason a call at 812-499-9475 or Alicia at 574-780-0583.</p>
+                </div> 
+            </div>
+            <div class="adminPanel" style="display: none;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Spouse / SO</th>
+                            <th>Address</th>
+                            <th>Guests Allowed</th>
+                            <th>Invite Sent</th>
+                            <th>RSVP Status</th>
+                            <th>Attending Count</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="guest in guests">
+                            <td>{{ guest.Name }}</td>
+                            <td>{{ guest.Spouse }}</td>
+                            <td>
+                                {{ guest.Address }}<br />
+                                {{ guest.City }}, {{ guest.State }} {{ guest.Zip }}
+                            </td>
+                            <td>{{ guest.Guests }}</td>
+                            <td>{{ guest.Invite }}</td>
+                            <td>{{ guest.RSVP }}</td>
+                            <td>{{ guest.RSVPCount }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
