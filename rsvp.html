@@ -83,9 +83,14 @@
                     <div v-else>
                         <p>Your RSVP is all set. If your status changes or you need anything else please give Jason a call at 812-499-9475 or Alicia at 574-780-0583.</p>
                         <p>As one last step we are giving our guests the option to provide us with a cell phone number so that we can get in touch with you prior to our event. We will be sending out a text message to anyone who provides their number to provide them with the gate code required to get into the venue on the big day. Additionally, we may reach out to notify our guests of any considerations that need to be made on behalf of the weather report.</p>
-                        <label>Cell Phone (optional)</label>
-                        <input type="text" name="phone" id="phone">
-                        <button class="button affirmative" @click="submitNumber">Submit</button>
+                        <div v-if="!phoneSubmitted">
+		                    <label>Cell Phone (optional)</label>
+		                    <the-mask mask="(###) ###-####" placeholder="(555) 555-5555" type="text" v-model="phone"></the-mask>
+		                    <button class="button affirmative" @click="addPhone">Submit</button>
+		                </div>
+		                <div v-else>
+		                	<p><em>We've got your number, thank you!</em></p>
+		                </div>
                         <p>For information about accomodation in Indianapolis, couple registration, or event times and locations please visit the <a href="info.html">guest information page</a>.</p>
                     </div>
                 </div>
@@ -106,9 +111,14 @@
                     <h4>We'll see you in October!</h4>
                     <p>Your RSVP is all set. If your status changes or you need anything else please give Jason a call at 812-499-9475 or Alicia at 574-780-0583.</p>
                     <p>As one last step we are giving our guests the option to provide us with a cell phone number so that we can get in touch with you prior to our event. We will be sending out a text message to anyone who provides their number to provide them with the gate code required to get into the venue on the big day. Additionally, we may reach out to notify our guests of any considerations that need to be made on behalf of the weather report.</p>
-                    <label>Cell Phone (optional)</label>
-                    <input type="text" name="phone" id="phone">
-                    <button class="button affirmative" @click="submitNumber">Submit</button>
+                    <div v-if="!phoneSubmitted">
+	                    <label>Cell Phone (optional)</label>
+	                    <the-mask mask="(###) ###-####" placeholder="(555) 555-5555" type="text" v-model="phone"></the-mask>
+	                    <button class="button affirmative" @click="addPhone">Submit</button>
+	                </div>
+	                <div v-else>
+	                	<p><em>We've got your number, thank you!</em></p>
+	                </div>
                     <p>For information about accomodation in Indianapolis, couple registration, or event times and locations please visit the <a href="info.html">guest information page</a>.</p>
                 </div>
                 <div v-else>
@@ -152,5 +162,6 @@
     <script src="https://unpkg.com/vuefire/dist/vuefire.js"></script>
     <script src="https://cdn.jsdelivr.net/fuse/2.6.1/fuse.min.js"></script>
     <script src="src/rsvp.js"></script>
+    <script src="src/vue-the-mask.js"></script>
   </body>
 </html>

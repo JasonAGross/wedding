@@ -22,7 +22,9 @@ var app = new Vue({
 		activeGuest: [],
 		primaryAttending: false,
 		SOAttending: false,
-		guestAttending: false
+		guestAttending: false,
+		phoneSubmitted: false,
+		phone: ''
 	},
 	computed: {
 		filteredResults: function() {
@@ -31,6 +33,12 @@ var app = new Vue({
 				if (this.searchResults[i].score === 0) { // We have a perfect match, assume we don't need any more
 					filteredSet.push(this.searchResults[i].item);
 					this.activeGuest = this.searchResults[i].item;
+					// Check to see if who we have listed as the spouse is actually filling out the RSVP
+					if (this.activeGuest.Spouse == this.searchValue) {
+						// If the spouse/SO is doing the search then let's just switch their spots with the primary listee
+						this.activeGuest.Spouse = this.activeGuest.Name;
+						this.activeGuest.Name = this.searchValue;
+					}
 					break;
 				} else if (i > 0 && this.searchResults[i].score - this.searchResults[i-1].score >= 0.075) { // If the next match is more than 7.5% less correct, assume we don't want anymore
 					break;
@@ -83,6 +91,12 @@ var app = new Vue({
 		},
 		selectResult: function(i) {
 			this.activeGuest = this.filteredResults[i];
+			// Check to see if who we have listed as the spouse is actually filling out the RSVP
+			if (this.activeGuest.Spouse == this.searchValue) {
+				// If the spouse/SO is doing the search then let's just switch their spots with the primary listee
+				this.activeGuest.Spouse = this.activeGuest.Name;
+				this.activeGuest.Name = this.searchValue;
+			}
 		},
 		confirmPrimary: function() {
 			this.primaryAttending = true;
@@ -143,7 +157,13 @@ var app = new Vue({
 			db.ref('guestlist/' + this.activeGuest['.key']).update({
 				RSVP: 'Yes',
 				RSVPCount: count
-			})
+			});
+		},
+		addPhone: function() {
+			this.phoneSubmitted = true;
+			db.ref('guestlist/' + this.activeGuest['.key']).update({
+				Phone: this.phone
+			});
 		}
 	}
 })
