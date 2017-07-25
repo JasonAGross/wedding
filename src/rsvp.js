@@ -24,7 +24,8 @@ var app = new Vue({
 		SOAttending: false,
 		guestAttending: false,
 		phoneSubmitted: false,
-		phone: ''
+		phone: '',
+		adminUser: ''
 	},
 	computed: {
 		filteredResults: function() {
@@ -47,6 +48,13 @@ var app = new Vue({
 				}
 			}
 			return filteredSet;
+		},
+		isAdminUser: function() {
+			if (this.adminUser === 'jasongross86@gmail.com') {
+				return true;
+			} else {
+				return false;
+			}
 		}
 	},
 	methods: {
@@ -164,6 +172,25 @@ var app = new Vue({
 			db.ref('guestlist/' + this.activeGuest['.key']).update({
 				Phone: this.phone
 			});
+		},
+		onSuccess: function(googleUser) {
+			var user = googleUser.getBasicProfile()
+			this.adminUser = user.getEmail();
+		},
+		onFailure: function(error) {
+			console.log(error);
 		}
 	}
-})
+});
+
+function renderButton() {
+  gapi.signin2.render('my-signin2', {
+    'scope': 'profile email',
+    'width': 240,
+    'height': 50,
+    'longtitle': true,
+    'theme': 'dark',
+    'onsuccess': app.onSuccess,
+    'onfailure': app.onFailure
+  });
+}

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="google-signin-client_id" content="841026525629-age9rkud6n74etkitkqlue5h77261vqf.apps.googleusercontent.com">
+
+    <title>Alicia and Jason 2017 - RSVP</title>
+
+    <link rel="stylesheet" href="css/main.css">
+    <link href="https://file.myfontastic.com/Ts8vfukvBBzvDPtsrXDneb/icons.css" rel="stylesheet">
+
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://use.typekit.net/yeu6hsr.js"></script>
+    <script>try{Typekit.load({ async: true });}catch(e){}</script>
+  </head>
+  <body>
+    <header id="pageHeader" class="clearfix">
+        <div class="wrapper">
+    		<a href="index.html"><img src="img/logo.png"></a>
+            <nav>
+                <ul>
+                    <li><a href="index.html" class="">Our Story</a></li>
+                    <li><a href="wedding.html" class="">Our Wedding</a></li>
+                    <li><a href="info.html" class="">Guest Info</a></li>
+                    <li><a href="rsvp.html" class="">RSVP</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <div class="wrapper">
+        <div id="app" class="rsvpAdmin">
+            <div class="adminPanel" v-if="isAdminUser">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Spouse / SO</th>
+                            <th>Address</th>
+                            <th>Guests Allowed</th>
+                            <th>Invite Sent</th>
+                            <th>RSVP Status</th>
+                            <th>Attending Count</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(guest, index) in guests">
+                            <td class="index">{{ index }}</td>
+                            <td>{{ guest.Name }}</td>
+                            <td>{{ guest.Spouse }}</td>
+                            <td>
+                                {{ guest.Address }}<br />
+                                {{ guest.City }}, {{ guest.State }} {{ guest.Zip }}
+                            </td>
+                            <td>{{ guest.Guests }}</td>
+                            <td>{{ guest.Invite }}</td>
+                            <td>{{ guest.RSVP }}</td>
+                            <td>{{ guest.RSVPCount }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="signIn" v-else>
+                <div id="my-signin2"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/3.6.8/firebase.js"></script>
+    <script src="https://unpkg.com/vuefire/dist/vuefire.js"></script>
+    <script src="src/rsvp.js"></script>
+    <script src="src/vue-google-signin-button.min.js"></script>
+    <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+  </body>
+</html>

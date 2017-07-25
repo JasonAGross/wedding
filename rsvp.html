@@ -126,35 +126,6 @@
                     <p>Thank you for completing your RSVP process. We are sorry you will not be able to attend our wedding. If your status changes or you need anything else please give Jason a call at 812-499-9475 or Alicia at 574-780-0583.</p>
                 </div> 
             </div>
-            <div class="adminPanel" style="display: none;">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Spouse / SO</th>
-                            <th>Address</th>
-                            <th>Guests Allowed</th>
-                            <th>Invite Sent</th>
-                            <th>RSVP Status</th>
-                            <th>Attending Count</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="guest in guests">
-                            <td>{{ guest.Name }}</td>
-                            <td>{{ guest.Spouse }}</td>
-                            <td>
-                                {{ guest.Address }}<br />
-                                {{ guest.City }}, {{ guest.State }} {{ guest.Zip }}
-                            </td>
-                            <td>{{ guest.Guests }}</td>
-                            <td>{{ guest.Invite }}</td>
-                            <td>{{ guest.RSVP }}</td>
-                            <td>{{ guest.RSVPCount }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
         </div>
     </div>
 
