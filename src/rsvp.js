@@ -23,6 +23,8 @@ var app = new Vue({
 		primaryAttending: false,
 		SOAttending: false,
 		guestAttending: false,
+		child1Attending: false,
+		child2Attending: false,
 		phoneSubmitted: false,
 		phone: '',
 		adminUser: ''
@@ -145,6 +147,10 @@ var app = new Vue({
 			this.processRSVP();
 			this.step++;
 		},
+		finishFamily: function() {
+			this.processRSVP();
+			this.step++;
+		},
 		processRSVP: function() {
 			var count = 0;
 
@@ -155,6 +161,12 @@ var app = new Vue({
 				count++
 			}
 			if (this.guestAttending) {
+				count++
+			}
+			if (this.child1Attending) {
+				count++
+			}
+			if (this.child2Attending) {
 				count++
 			}
 

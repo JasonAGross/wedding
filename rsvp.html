@@ -69,10 +69,28 @@
                 <div v-if="primaryAttending">
                     <h4>That's great {{ activeGuest.Name.split(' ')[0] }}!</h4>
                     <p>We can't wait to see you at our wedding. 
-                        <span v-if="activeGuest.Spouse">Will {{ activeGuest.Spouse.split(' ')[0] }} be joining you?</span>
+                        <div v-if="activeGuest.AdultDependent1">
+                            Who else will be joining you?<br /><br />
+                            <label for="spouse">
+                                <input type="checkbox" name="spouse" id="spouse" v-model="SOAttending">
+                                {{ activeGuest.Spouse.split(' ')[0] }}
+                            </label>
+                            <label for="child1">
+                                <input type="checkbox" name="child1" id="child1" v-model="child1Attending">
+                                {{ activeGuest.AdultDependent1 }}
+                            </label>
+                            <label v-if="activeGuest.AdultDependent2" for="child2">
+                                <input type="checkbox" name="child2" id="child2" v-model="child2Attending">
+                                {{ activeGuest.AdultDependent2 }}
+                            </label>
+                        </div>
+                        <span v-else-if="activeGuest.Spouse">Will {{ activeGuest.Spouse.split(' ')[0] }} be joining you?</span>
                         <span v-else-if="activeGuest.Guests > 0">Are you planning on bringing a guest with you?</span>
                     </p>
-                    <div v-if="activeGuest.Spouse">
+                    <div v-if="activeGuest.AdultDependent1">
+                        <button class="button affirmative" @click="finishFamily">Finished selecting family</button>
+                    </div>
+                    <div v-else-if="activeGuest.Spouse">
                         <button class="button affirmative" @click="confirmSO">Yes, {{ activeGuest.Spouse.split(' ')[0] }} is coming too</button>
                         <button class="button neutral" @click="denySO">No, {{ activeGuest.Spouse.split(' ')[0] }} can't come</button>
                     </div>
@@ -96,7 +114,23 @@
                 </div>
                 <div v-else>
                     <h4>We're sorry to hear that {{ activeGuest.Name.split(' ')[0] }},</h4>
-                    <div v-if="activeGuest.Spouse">
+                    <div v-if="activeGuest.AdultDependent1">
+                        <p>Will anyone else in your family be joining us? Check anyone who plans to attend.</p>
+                        <label for="spouse">
+                            <input type="checkbox" name="spouse" id="spouse" v-model="SOAttending">
+                            {{ activeGuest.Spouse.split(' ')[0] }}
+                        </label>
+                        <label for="child1">
+                            <input type="checkbox" name="child1" id="child1" v-model="child1Attending">
+                            {{ activeGuest.AdultDependent1 }}
+                        </label>
+                        <label v-if="activeGuest.AdultDependent2" for="child2">
+                            <input type="checkbox" name="child2" id="child2" v-model="child2Attending">
+                            {{ activeGuest.AdultDependent2 }}
+                        </label>
+                        <button class="button affirmative" @click="finishFamily">Finished selecting family</button>
+                    </div>
+                    <div v-else-if="activeGuest.Spouse">
                         <p>Will {{ activeGuest.Spouse.split(' ')[0] }} be attending without you?</p>
                         <button class="button affirmative" @click="confirmSO">Yes, {{ activeGuest.Spouse.split(' ')[0] }} is still coming</button>
                         <button class="button neutral" @click="denySO">No, we are both missing the event</button>
