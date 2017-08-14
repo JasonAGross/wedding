@@ -7,7 +7,8 @@ var config = {
   messagingSenderId: "851671845395"
 };
 var firebaseApp = firebase.initializeApp(config);
-var db = firebaseApp.database()
+var db = firebaseApp.database();
+var dbRef = db.ref('guestlist');
 
 var app = new Vue({
 	el: '#app',
@@ -25,7 +26,10 @@ var app = new Vue({
 		guestAttending: false,
 		child1Attending: false,
 		child2Attending: false,
+		child3Attending: false,
 		phoneSubmitted: false,
+		guestSubmitted: false,
+		guestName: '',
 		phone: '',
 		adminUser: ''
 	},
@@ -52,11 +56,20 @@ var app = new Vue({
 			return filteredSet;
 		},
 		isAdminUser: function() {
-			if (this.adminUser === 'jasongross86@gmail.com') {
+			if (this.adminUser === 'jasongross86@gmail.com' || this.adminUser === 'jason@jasonagross.com' || this.adminUser == 'awhitt2010@gmail.com') {
 				return true;
 			} else {
 				return false;
 			}
+		},
+		guestCount: function() {
+			var guestCount = 0;
+			for (var i = this.guests.length - 1; i >= 0; i--) {
+				if (this.guests[i].RSVPCount) {
+					guestCount = guestCount+Number(this.guests[i].RSVPCount);
+				}
+			}
+			return guestCount;
 		}
 	},
 	methods: {
@@ -174,10 +187,18 @@ var app = new Vue({
 				count = 0;
 			}
 
-			db.ref('guestlist/' + this.activeGuest['.key']).update({
-				RSVP: 'Yes',
-				RSVPCount: count
-			});
+			if (this.guestAttending) {
+				db.ref('guestlist/' + this.activeGuest['.key']).update({
+					RSVP: 'Yes',
+					RSVPCount: count,
+					Spouse: this.guestName
+				});
+			} else {
+				db.ref('guestlist/' + this.activeGuest['.key']).update({
+					RSVP: 'Yes',
+					RSVPCount: count
+				});
+			}
 		},
 		addPhone: function() {
 			this.phoneSubmitted = true;
@@ -185,12 +206,19 @@ var app = new Vue({
 				Phone: this.phone
 			});
 		},
+		addGuest: function() {
+			this.guestSubmitted = true;
+			this.processRSVP();
+		},
 		onSuccess: function(googleUser) {
 			var user = googleUser.getBasicProfile()
 			this.adminUser = user.getEmail();
 		},
 		onFailure: function(error) {
 			console.log(error);
+		},
+		adminUpdateData: function(guest, field, value) {
+			dbRef.child(guest['.key']).child(field).set(value);
 		}
 	}
 });

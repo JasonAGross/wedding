@@ -32,7 +32,8 @@
     <div class="wrapper">
         <div id="app" class="rsvpAdmin">
             <div class="adminPanel" v-if="isAdminUser">
-                <table>
+            	<h2>Total confirmed guests: {{ this.guestCount }}</h2>
+                <table cellpadding="0" cellspacing="0">
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -45,18 +46,29 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(guest, index) in guests">
-                            <td class="index">{{ index }}</td>
-                            <td>{{ guest.Name }}</td>
-                            <td>{{ guest.Spouse }}</td>
+                        <tr v-for="guest in guests">
+                            <td><input type="text" v-model="guest.Name" @change="adminUpdateData(guest, 'Name', $event.target.value)" style="width: 160px;"></td>
+                            <td><input type="text" v-model="guest.Spouse" @change="adminUpdateData(guest, 'Spouse', $event.target.value)" style="width: 160px;"></td>
                             <td>
-                                {{ guest.Address }}<br />
-                                {{ guest.City }}, {{ guest.State }} {{ guest.Zip }}
+                                <input type="text" v-model="guest.Address" @change="adminUpdateData(guest, 'Address', $event.target.value)"><br />
+                                <input type="text" v-model="guest.City" @change="adminUpdateData(guest, 'City', $event.target.value)" style="width: 125px;">, 
+                                <input type="text" v-model="guest.State" @change="adminUpdateData(guest, 'State', $event.target.value)" style="width: 50px">
+                                <input type="number" v-model="guest.Zip" @change="adminUpdateData(guest, 'Zip', $event.target.value)" style="width: 85px">
                             </td>
-                            <td>{{ guest.Guests }}</td>
-                            <td>{{ guest.Invite }}</td>
-                            <td>{{ guest.RSVP }}</td>
-                            <td>{{ guest.RSVPCount }}</td>
+                            <td><input type="number" v-model="guest.Guests" @change="adminUpdateData(guest, 'Guests', $event.target.value)" style="width: 50px;"></td>
+                            <td>
+                            	<select @change="adminUpdateData(guest, 'Invite', $event.target.value)">
+                            		<option value="No">No</option>
+                            		<option value="Yes" :selected="guest.Invite == 'Yes'">Yes</option>
+                            	</select>
+                        	</td>
+                            <td>
+                            	<select @change="adminUpdateData(guest, 'RSVP', $event.target.value)">
+                            		<option value="No">No</option>
+                            		<option value="Yes" :selected="guest.RSVP == 'Yes'">Yes</option>
+                            	</select>
+                            </td>
+                            <td style="text-align: center;">{{ guest.RSVPCount }}</td>
                         </tr>
                     </tbody>
                 </table>

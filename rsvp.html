@@ -8,7 +8,6 @@
     <title>Alicia and Jason 2017 - RSVP</title>
 
     <link rel="stylesheet" href="css/main.css">
-    <link href="https://file.myfontastic.com/Ts8vfukvBBzvDPtsrXDneb/icons.css" rel="stylesheet">
 
     <script src="https://unpkg.com/vue/dist/vue.js"></script>
     <script src="https://use.typekit.net/yeu6hsr.js"></script>
@@ -23,7 +22,7 @@
                     <li><a href="index.html" class="">Our Story</a></li>
                     <li><a href="wedding.html" class="">Our Wedding</a></li>
                     <li><a href="info.html" class="">Guest Info</a></li>
-                    <li><a href="rsvp.html" class="">RSVP</a></li>
+                    <li><a href="rsvp.html" class="active">RSVP</a></li>
                 </ul>
             </nav>
         </div>
@@ -83,6 +82,10 @@
                                 <input type="checkbox" name="child2" id="child2" v-model="child2Attending">
                                 {{ activeGuest.AdultDependent2 }}
                             </label>
+                            <label v-if="activeGuest.AdultDependent3" for="child3">
+                                <input type="checkbox" name="child3" id="child3" v-model="child3Attending">
+                                {{ activeGuest.AdultDependent3 }}
+                            </label>
                         </div>
                         <span v-else-if="activeGuest.Spouse">Will {{ activeGuest.Spouse.split(' ')[0] }} be joining you?</span>
                         <span v-else-if="activeGuest.Guests > 0">Are you planning on bringing a guest with you?</span>
@@ -141,13 +144,22 @@
                 </div> 
             </div>
             <div class="infoPage" v-if="step === 2">
-                <div v-if="primaryAttending || SOAttending">
+            	<div v-if="guestAttending && !guestSubmitted">
+            		<h4>Who will be joining you</h4>
+            		<p>We want everyone to feel welcome at our wedding. So please provide us with the name of your guest.</p>
+            		<div class="formField">
+            			<label>Guest Name</label>
+            			<input name="guestName" type="text" v-model="guestName">
+            		</div>
+            		<button class="button affirmative" @click="addGuest">Submit</button>
+            	</div>
+                <div v-else-if="primaryAttending || SOAttending">
                     <h4>We'll see you in October!</h4>
                     <p>Your RSVP is all set. If your status changes or you need anything else please give Jason a call at 812-499-9475 or Alicia at 574-780-0583.</p>
                     <p>As one last step we are giving our guests the option to provide us with a cell phone number so that we can get in touch with you prior to our event. We will be sending out a text message to anyone who provides their number to provide them with the gate code required to get into the venue on the big day. Additionally, we may reach out to notify our guests of any considerations that need to be made on behalf of the weather report.</p>
                     <div v-if="!phoneSubmitted">
 	                    <label>Cell Phone (optional)</label>
-	                    <the-mask mask="(###) ###-####" placeholder="(555) 555-5555" type="text" v-model="phone"></the-mask>
+	                    <the-mask mask="(###) ###-####" placeholder="(555) 555-5555" type="tel" v-model="phone"></the-mask>
 	                    <button class="button affirmative" @click="addPhone">Submit</button>
 	                </div>
 	                <div v-else>
